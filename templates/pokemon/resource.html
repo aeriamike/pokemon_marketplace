@@ -1,0 +1,56 @@
+{% extends 'pokemon/layout.html' %}
+{% block content %}
+{% load static %}
+
+
+
+</body>
+
+<div class="container" width="100%" style="position:relative;right:0px;top:30px;">
+  <img src ="{% static "img/rescover.png" %}" alt = "My Image">
+</div>
+
+<div class="container" style="margin-top:100px;margin-bottom:100px;">
+
+    <h1 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Resource</h1>
+    <div class="box" style="background-color:#e8e8e8;padding:20px;">
+	    <p style="line-height: 2; font-size:16px">The following section contains information on how the website is created and what resources are used in the process. References are included in this page. The next paragraph is some random text.</p>
+</div>
+
+   <h3 class="text-primary"  style="margin-top:20px;margin-bottom:20px;">The build</h3>
+  <p style="line-height: 2; font-size:16px">The structure of the website is presented by the flowchart below.  </p>
+
+ <div class="container" width="100%" style="position:relative;">
+   <img class="img-fluid" src  ="{% static "img/flowchart.jpg" %}" alt = "My Image">
+ </div>
+
+
+  <h3 class="text-primary"  style="margin-top:20px;margin-bottom:20px;">How do we get Pokemon Data?</h3>
+
+ <p style="line-height: 2; font-size:16px">Various Pokemon-related information is retrieved by the API website <code>pokeapi.co</code></p>
+ <p style="line-height: 2; font-size:16px">The data is retrieved Pokemon-by-Pokemon using Python crawler under the API format e.g. <code>pokeapi/ditto/</code></p>
+ <p style="line-height: 2; font-size:16px">The data are formatted in json file, which they can be serialized by django for data insertion.</p>
+
+
+
+  <h3 class="text-primary"  style="margin-top:20px;margin-bottom:20px;">How do we get the sprites and pictures?</h3>
+   <p style="line-height: 2; font-size:16px">There are two types of Pokemon sprites used in this project: mini ones and bigger ones.<br> Sprites are called by icon tags after their link references are included in the project.</p>
+   <p style="line-height: 2; font-size:16px">mini sprites by Lunik: <code>https://github.com/Lunik/pokemon-icon</code> </p>
+   <p style="line-height: 2; font-size:16px">bigger sprites by karismatic-megafauna: <code>https://github.com/karismatic-megafauna/pokemon-images</code> </p>
+   <p style="line-height: 2; font-size:16px"> Picture References: </p>
+   <p style="line-height: 2; font-size:16px"> Home page is from Pokemon Go official art: <code>https://pokemongolive.com/en/</code> </p>
+   <p style="line-height: 2; font-size:16px"> Resource page is from fanart by 東みなつ : <code>https://www.pixiv.net/member_illust.php?id=771029</code> </p>
+
+
+
+  <h3 class="text-primary"  style="margin-top:20px;margin-bottom:20px;">Members</h3>
+<p>This project is done by Group 2 of CMPT 470 Summer 2019 from Simon Fraser University: <code>Justin Jia</code>,  <code>Jason Wang</code>,  <code>Claire Lu</code>,  <code>Hansen William</code>, and  <code>Wen Xuan Xie</code></p>
+
+</div>
+
+
+
+{% endblock %}
+
+
+</html>

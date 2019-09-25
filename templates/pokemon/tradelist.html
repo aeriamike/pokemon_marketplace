@@ -1,0 +1,166 @@
+{% extends 'pokemon/layout.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container" style="margin-top:100px;margin-bottom:100px;">
+
+    <h1 class="text-primary">Trade Post</h1>
+	    <p style="line-height: 2; font-size:16px"> Find your desired Pokemon in this trade forum.</p>
+      <p style="line-height: 2; font-size:16px"> Trainers can search for a Pokemon they want (based on criteria of name,type, etc). Then, the website gives a list of available trade that satisfy the search criteria after pressing the search button. The trainer can select a post and make an offer of which Pokemon he/she wants to trade for. Once a deal is made, traders can rearrange a time on the website for making the trade through their game consoles.
+When searching for trade post(s) with the desired Pokemon, the user has a couple of options to use. For example, they can either specify the Pokemon they want using the name of the Pokemon or its number as indexed by the Pokedex encyclopedia.
+<br><br> Currently, the database contains available Pokemon selections from Gen 1 through Gen 7, one with number listed from 001-721, and another with all the names. There will also be a list of all the available abilities and types of Pokemon as ways for trainers to find their desired Pokemon.
+</p>
+
+
+
+</div>
+
+<div class="container" style="margin-top:20px;margin-bottom:20px;">
+  <div class="row">
+  <h4 class="text-primary" style="margin-right:1em;">Find your Pokemon</h4>
+      <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+  <form action="" method="POST">{% csrf_token %}
+	  <button class="btn btn-default">
+	       Reset
+	  </button>
+  </form>
+  </div>
+ <div class="row">
+    <div class="form-group col-sm" style="width:200px;display:inline-block;">
+     <label for="sel1">Pokemon Number</label>
+      <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+     <form action="" method="POST">{% csrf_token %}
+     <select class="form-control" id="sel1" type="search" name="pkid">
+      {% for pkmn in pokemon %}
+      <option{% if forloop.counter|title == 1pk.id %} selected{% endif %}>{{forloop.counter}}</option>
+      {%endfor%}
+     </select>
+     <!-- <a href="/contacts/add_contact"></a> -->
+         <button class="btn btn-default">
+            Search
+         </button>
+     <!-- </a> -->
+     </form>
+     </div>
+
+     <div class="form-group col-sm" style="width:200px;display:inline-block;">
+      <label for="sel1">Pokemon Name</label>
+      <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+      <form action="" method="POST">{% csrf_token %}
+      <select class="form-control" id="sel1" type="search" name="pkname">
+        {% for pkmn in pokemon %}
+        <option{% if pkmn.name == 1pk.name %} selected{% endif %}>{{pkmn.name}}</option>
+        {%endfor%}
+      </select>
+      <!-- <a href="/contacts/add_contact"> -->
+          <button class="btn btn-default">
+             Search
+          </button>
+      <!-- </a> -->
+      </form>
+      </div>
+
+      <div class="form-group col-sm" style="width:200px;display:inline-block;">
+       <label for="sel1">Type</label>
+      <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+       <form action="" method="POST">{% csrf_token %}
+       <select class="form-control" id="sel1" type="search" name="pktype">
+        {% for i in pktype %}
+            <option{% if i == 1pk.type %} selected{% endif %}>{{ i }}</option>
+        {%endfor%}
+       </select>
+           <button class="btn btn-default">
+              Search
+           </button>
+       </form>
+       </div>
+
+       <div class="form-group col-sm" style="width:200px;display:inline-block;">
+        <label for="sel1">Game</label>
+      <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+        <form action="" method="POST">{% csrf_token %}
+        <select class="form-control" id="sel1" type="search" name="pkgame">
+         {% for i in pkgame %}
+           <option{% if i|title == 1pk.game %} selected{% endif %}>{{ i }}</option>
+         {%endfor%}
+        </select>
+            <button class="btn btn-default">
+               Search
+            </button>
+        </form>
+        </div>
+
+        <div class="form-group col-sm" style="width:200px;display:inline-block;">
+        <label for="sel1">Abilities</label>
+      <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+        <form action="" method="POST">{% csrf_token %}
+        <select class="form-control" id="sel1" type="search" name="pkability">
+         {% for i in pokeabilities %}
+           <option{% if i.name == 1pk.ability %} selected{% endif %}>{{ i.name }}</option>
+         {%endfor%}
+        </select>
+            <button class="btn btn-default">
+               Search
+            </button>
+        </form>
+        </div>
+   </div>
+   </div>
+
+
+
+<div class="container" style="margin-bottom:100px;">
+    <h1 class="text-primary">Available Trades</h1>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Trade #</th>
+      <th scope="col"><a href="{% url 'pokemon:tradelist' %}?trader={{toggle.trader}}{{queryString}}">Trader</a></th>
+      <th scope="col"><a href="{% url 'pokemon:tradelist' %}?pokemon_offer={{toggle.pokemon_offer}}{{queryString}}">Pkmn Name</a></th>
+      <th scope="col"><a href="{% url 'pokemon:tradelist' %}?gender={{toggle.gender}}{{queryString}}">Gender</a></th>
+      <th scope="col"><a href="{% url 'pokemon:tradelist' %}?level={{toggle.level}}{{queryString}}">Level</a></th>
+      <th scope="col"><a href="{% url 'pokemon:tradelist' %}?game={{toggle.game}}{{queryString}}">Game</a></th>
+      <th scope="col"><a href="{% url 'pokemon:tradelist' %}?deadline={{toggle.deadline}}{{queryString}}">Deadline</a></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for post in tradepost %}
+      {% if post.is_active %}
+      <tr>
+        <th scope="row">{{ post.pk }}</th>
+        <td>{{ post.trader }}</td>
+        <td><i class="pi pi-{{ post.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ post.pokemon_name }}</td>
+        <td>{{ post.pokemon_gender }}</td>
+        <td>{{ post.pokemon_level }}</td>
+        <td>{{ post.game }}</td>
+        <td>{{ post.deadline }}</td>
+        {% if user.username == post.trader %}
+          <td><a href="{% url 'pokemon:offertrade' post.id %}"><button type="button" class="btn" disabled>Offer</button></a></td>
+          <td><button type="button" class="btn" disabled>Favourite</button</td>
+        {% else %}
+          <td><a href="{% url 'pokemon:offertrade' post.id %}"><button type="button" class="btn btn-primary" >Offer</button></a></td>
+
+          <form action="{% url 'pokemon:favourite' post.id %}" method="GET">
+            <td><i class="fa fa-shopping-cart"></i><input type="submit" class="btn btn-primary" value="Favourite" name="favourite"></input></td>
+          </form>
+        {% endif %}
+      </tr>
+      {% endif %}
+    {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+</body>
+
+
+
+
+
+{% endblock %}
+
+</html>

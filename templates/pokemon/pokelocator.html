@@ -1,0 +1,205 @@
+{% extends 'pokemon/layout.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="height: 1000px; width:600px; display:none;right:0;" id="rightMenu">
+  <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large">Close &times;</button>
+  <div class="locator-data" style="margin: 0 18px;">
+
+  </div>
+</div>
+
+
+<div class="container" style="margin-top:100px;margin-bottom:150px;">
+
+    <h1 class="text-primary" style="margin-top:20px;margin-bottom:20px;">PokeLocator</h1>
+    <div class="box" style="">
+	    <p style="line-height: 2; font-size:18px">If you cannot find your desired Pokemon in our trade forum, please check out our PokeLocator library.</p>
+      <p style="line-height: 2; font-size:18px">This site contains coordinates and guides for where to catch Pokemon (from Gen 1 to 6) from specific games.<br>
+      Click on the search button of a certain Pokemon, a slide bar shows on the right, containing a list of location from certain games which the Pokemon may be available</p>
+</div>
+
+  <div class="container">
+    <div class="row" style="width:100%">
+        {% for pkmn in pokemon %}
+
+        {% if pkmn.id == 1 %}
+        </div>
+        <div class="" style="">
+          <h3 class="text-primary" style="margin-top:20px;margin-bottom:20px;">First Generation: Kanto Region #1 - #151</h1>
+
+          <p style="line-height: 2; font-size:22px">Games in this generation: Red, Green, Blue, Yellow, FireRed, LeafGreen </p>
+
+            <br>
+                </div>
+                <div class="row">
+        {% elif pkmn.id == 152 %}
+                  </div>
+                  <div class="" style="">
+                    <h3 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Seocnd Generation: Johto Region #152 - #250</h1>
+
+                    <p style="line-height: 2; font-size:22px">Games in this generation: Gold, Silver, HeartGold, SoulSilver </p>
+
+                      <br>
+                          </div>
+                          <div class="row">
+        {% elif pkmn.id == 251 %}
+                      </div>
+                        <div class="" style="">
+                        <h3 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Third Generation: Hoenn Region #252 - #385</h1>
+
+                      <p style="line-height: 2; font-size:22px">Games in this generation: Ruby, Sapphire, Emerald </p>
+
+                      <br>
+                          </div>
+                              <div class="row">
+        {% elif pkmn.id == 386 %}
+                              </div>
+                              <div class="" style="">
+                            <h3 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Fourth Generation: Sinnoh Region #386 - #492</h1>
+                              <p style="line-height: 2; font-size:22px">Games in this generation: Diamond, Pearl, Platinum </p>
+                              <br>
+                                  </div>
+                                    <div class="row">
+
+        {% elif pkmn.id == 493 %}
+                            </div>
+                            <div class="" style="">
+                              <h3 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Fifth Generation: Unova Region #493 - #648</h1>
+
+                              <p style="line-height: 2; font-size:22px">Games in this generation: Black, White, Black 2, White 2 </p>
+                              <br>
+                              </div>
+                                <div class="row">
+    {% elif pkmn.id == 650 %}
+                            </div>
+                              <div class="" style="">
+                        <h3 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Sixth Generation: Kalos Region #650 - #721</h1>
+
+                            <p style="line-height: 2; font-size:22px">Games in this generation: X, Y </p>
+                            <br>
+                            </div>
+                                <div class="row">
+        {% endif %}
+
+
+
+      <div class="col-sm-2 square" style="width:200px;height:140px;border:1px solid grey;">
+              <i class="pi pi-{{ pkmn.name|lower }}"></i>
+
+
+              <p style="font-size:14px;">#{{pkmn.id}} {{pkmn.name}}</p>
+
+              <div class="w3-teal">
+                  <button class="w3-button w3-teal w3-small w3-right" onclick="openRightMenu(this)" value="{{pkmn.id}}={{pkmn.name}}={{pkmn.encounters}}">
+                    <i class="fa fa-search"></i></button>
+
+              </div>
+
+
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <script>
+  function openRightMenu(element) {
+    let split_value = element.value.split("=")
+    let pokemon_id = split_value[0];
+    let pokemon_name = split_value[1];
+    let locator = split_value[2].replace(/'/g, '"');
+    let location_json = JSON.parse(locator);
+
+    let display = ''
+    display += '  <img class="img-fluid" src  ="{% static "pokemon-regsprite/pokemon/other-sprites/official-artwork" %}/' + pokemon_id + '.png " alt = "My Image" style="height:20%;position:relative;left:160px;">'
+    display += '<p style="font-size:20px;position:relative;left:14px;">#' + pokemon_id + ' ' +pokemon_name + '</p>'
+
+
+    if (pokemon_id < 152){
+      display += '<p style="font-size:18px;position:relative;left:14px;">Gen 1 Pokemon</p>'
+    }else if (pokemon_id < 251){
+      display += '<p style="font-size:18px;position:relative;left:14px;">Gen 2 Pokemon</p>'
+    }else if (pokemon_id < 386){
+      display += '<p style="font-size:18px;position:relative;left:14px;">Gen 3 Pokemon</p>'
+    }else if (pokemon_id < 493){
+      display += '<p style="font-size:18px;position:relative;left:14px;">Gen 4 Pokemon</p>'
+    }else if (pokemon_id < 649){
+      display += '<p style="font-size:18px;position:relative;left:14px;">Gen 5 Pokemon</p>'
+    }else if (pokemon_id < 722){
+      display += '<p style="font-size:18px;position:relative;left:14px;">Gen 6 Pokemon</p>'
+    }
+
+
+    if(locator == '[]') {
+        display += '<p style="font-size:18px;position:relative;left:14px;">This Pokemon cannot be caught in-game. <br> However, this Pokemon may belong to one fo the following categories which may guide trainer to acquire it. </p>'
+
+
+    } else {
+      location_json.map((elem) => {
+
+        display += '<h1 class="text-primary" style="font-size:20px;position:relative;left:14px;">'+elem.game+'</h1><ul>';
+          // document.querySelector('.locator-data').innerHTML += '<ul class="list-group">'+elem.game;
+            elem.location.map((elem2) => {
+              display += '<li class="list-group-item">'+elem2+'</li>';
+            })
+            display += '</ul>';
+          })
+    }
+    const starter = "1-2-3-4-5-6-7-8-9-152-153-154-155-156-157-158-159-160-252-253-254-255-256-257-258-259-387-388-389-390-391-392-393-394-395-495-496-497-498-499-500-501-502-503-650-651-652-653-654-655-656-657-658";
+    const fossil = "138-139-140-141-142-345-346-347-348";
+    const eventpkmn = "151-251-385-718-719-721";
+    const legpkmn = "144-145-146-243-244-245-249-250-251-377-378-379-380-381-382-383-384-643-644-716-717-718-719-720-721";
+
+    if ( starter.indexOf(pokemon_id)!=-1){
+      display += '<h1 class="text-primary" style="font-size:20px;position:relative;left:14px;">Starter Pokemon</h1><ul>';
+
+      display += '<p style="font-size:18px;position:relative;left:14px;">This Pokemon can be acquried at the start of the game. It will be trainers first Pokemon to start the journey. </br> Its evolved form can be acquired as the game progresses. </p>'
+    }else if (fossil.indexOf(pokemon_id)!=-1){
+      display += '<h1 class="text-primary" style="font-size:20px;position:relative;left:14px;">Fossil Pokemon</h1><ul>';
+
+      display += '<p style="font-size:18px;position:relative;left:14px;">This Pokemon needs to be created by <br>certain fossil aqcuired in-game. </p></ul>'
+    }else{
+      if(legpkmn.indexOf(pokemon_id)!=-1 || eventpkmn.indexOf(pokemon_id)!=-1){
+
+        if (legpkmn.indexOf(pokemon_id)!=-1){
+          display += '<h1 class="text-primary" style="font-size:20px;position:relative;left:14px;">Legendary Pokemon</h1><ul>';
+
+          display += '<p style="font-size:18px;position:relative;left:14px;">Legedary Pokemon is powerful and unique. It is not easily encouterable in-game and usually been found during the game storyline. </p></ul>'
+        }
+
+        if (eventpkmn.indexOf(pokemon_id)!=-1){
+
+          display += '<h1 class="text-primary" style="font-size:20px;position:relative;left:14px;">Event Pokemon</h1><ul>';
+
+          display += '<p style="font-size:18px;position:relative;left:14px;">  It can be available through distribution gifts and events. </p></ul>'
+
+        }
+
+      }else if (locator == '[]'){
+        display += '<h1 class="text-primary" style="font-size:20px;position:relative;left:14px;">Evolved Pokemon</h1><ul>';
+        display += '<p style="font-size:18px;position:relative;left:14px;"> This Pokemon may be acquriable by evolving its minor form.</p></ul>'
+
+
+      }
+
+
+    }
+
+
+    document.getElementById("rightMenu").style.display = "block";
+    document.querySelector('.locator-data').innerHTML = display;
+  }
+
+  function closeRightMenu() {
+    document.getElementById("rightMenu").style.display = "none";
+  }
+  </script>
+
+
+
+
+</div>
+{% endblock %}

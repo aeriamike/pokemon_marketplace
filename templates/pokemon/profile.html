@@ -1,0 +1,331 @@
+{% extends 'pokemon/layout.html' %}
+{% block content %}
+{% load static %}
+
+{% if user.is_authenticated %}
+
+
+<div class="container" style="margin-top:20px;">
+<div class="row" style="margin-top:60px;">
+
+  <div class="col-sm" style="position:relative;left:20px;">
+
+
+   <h1 class="text-primary">Hello, Trainer {{user.username}}</h1>
+   <br>
+
+   <!-- <img src ="{% static "img/sun.jpg" %}" style="border-radius:50%;width:40%;"/> -->
+
+
+    <h4 class="text-primary">Personal Info</h4>
+
+   <p style="font-size:18px;"> User Name: {{user.username}}</p>
+
+   <p style="font-size:18px;">Email: {{user.email}}</p>
+
+   <p style="font-size:18px;">Friend Code: {{fcode}}</p>
+
+</div>
+
+   <div class="col-sm">
+      <div class="" style="position:relative;margin-top:90px;">
+   <a href="/pokemon/profile/maketrade">
+   <button class="btn btn-lg btn-primary">Impose a Trade</button>
+   </a>
+
+   <a href="/pokemon/tradelist">
+   <button class="btn btn-lg btn-secondary">Visit Trade Post</button>
+   </a>
+
+   <a href="/pokemon/pokelocator">
+   <button class="btn btn-lg btn-secondary">Visit PokeLocator</button>
+   </a>
+
+ </div>
+
+<div class="container" style="margin-top:20px;">
+
+
+
+</div>
+
+</div>
+</div>
+
+<div class="container" style="margin-top:60px;margin-bottom:20px;">
+  <h1 class="text-primary">Received Offers</h1>
+  <p>
+    You can view the offer that are being sent to you.
+  </p>
+
+<div class="container" style="margin-top:20px;">
+
+
+<table class="table">
+ <thead class="thead-light">
+    <tr>
+      <th scope="col">Offer #</th>
+      <th scope="col">Your Pokemon</th>
+      <th scope="col">Trader</th>
+      <th scope="col">Other Pokemon</th>
+      <th scope="col">Level</th>
+      <th scope="col">Game</th>
+      <th scope="col">Details</th>
+    </tr>
+  </thead>
+ <tbody>
+    {% if tradepost %}
+      {% for post in tradepost %}
+        {% if post.is_active %}
+          {% for offer in post.offertrade_set.all %}
+            {% if offer.is_available %}
+
+            <tr>
+              <th scope="row">{{ offer.pk }}</th>
+              <td><i class="pi pi-{{ post.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ post.pokemon_name }}</td>
+
+              <td>{{ offer.trader }}</td>
+              <td><i class="pi pi-{{ offer.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ offer.pokemon_name }}</td>
+              <td>{{ offer.pokemon_level }}</td>
+              <td>{{ post.game }}</td>
+              <td><a href="{% url 'pokemon:sentoffer' offer.pk %}"><button type="button" class="btn btn-primary">Go to offer</button></a></form></td>
+            </tr>
+        
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+ </tbody>
+</table>
+
+</div>
+</div>
+
+<div class="container" style="margin-top:60px;margin-bottom:20px;">
+
+    <h1 class="text-primary">Active Offers</h1>
+    <p>
+      You can view the offer that you have sent.
+    </p>
+
+ <div class="container" style="margin-top:20px;">
+
+
+ <table class="table">
+   <thead class="thead-light">
+      <tr>
+        <th scope="col">Offer #</th>
+        <th scope="col">Trader</th>
+        <th scope="col">Pokemon Name</th>
+        <th scope="col">Level</th>
+        <th scope="col">Trade With</th>
+        <th scope="col">Other Pokemon</th>
+        <th scope="col">Pokemon Level</th>
+      </tr>
+    </thead>
+   <tbody>
+        {% for offer in offertrade %}
+          {% if offer.is_available %}
+            <tr>
+              <th scope="row">{{ offer.pk }}</th>
+              <td>{{ offer.trader }}</td>
+              <td><i class="pi pi-{{ offer.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ offer.pokemon_name }}</td>
+              <td>{{ offer.pokemon_level }}</td>
+              <td>{{ offer.post.trader }}</td>
+              <td><i class="pi pi-{{ offer.post.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ offer.post.pokemon_name }}</td>
+              <td>{{ offer.post.pokemon_level }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+   </tbody>
+ </table>
+
+ </div>
+</div>
+
+<div class="container" style="margin-top:60px;margin-bottom:20px;">
+
+    <h1 class="text-primary">Active Trades</h1>
+    <p>
+      You can view the trade that you have posted.
+    </p>
+
+ <div class="container" style="margin-top:20px;">
+
+
+ <table class="table">
+   <thead class="thead-light">
+      <tr>
+        <th scope="col">Trade #</th>
+        <th scope="col">Trader</th>
+        <th scope="col">Pkmn Name</th>
+        <th scope="col">Level</th>
+        <th scope="col">Game</th>
+        <th scope="col">Expired by</th>
+      </tr>
+    </thead>
+   <tbody>
+      {% if tradepost %}
+        {% for post in tradepost %}
+          {% if post.is_active %}
+            <tr>
+              <th scope="row">{{ post.pk }}</th>
+              <td>{{ post.trader }}</td>
+              <td><i class="pi pi-{{ post.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ post.pokemon_name }}</td>
+              <td>{{ post.pokemon_level }}</td>
+              <td>{{ post.game }}</td>
+              <td>{{ post.deadline }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+   </tbody>
+ </table>
+
+ </div>
+</div>
+
+<div class="container" style="margin-top:60px;margin-bottom:20px;">
+
+    <h1 class="text-primary">Past Trades</h1>
+	    <p> This website aims to bring Pokemon trainers
+(Pokemon X, Y, Omega Ruby and Alpha Sapphire) and 7th generation Pokemon games
+ (Sun and Moon) together in order to complete Wi-Fi trades to gain those elusive
+ Pokemon and complete your Pokedex.</p>
+
+
+ <div class="container" style="margin-top:20px;">
+
+ <table class="table">
+   <thead class="thead-light">
+     <tr>
+       <th scope="col">Trade #</th>
+       <th scope="col">Original Trader</th>
+       <th scope="col">Pokemon Name</th>
+       <th scope="col">Level</th>
+       <th scope="col">Traded With</th>
+       <th scope="col">Traded Pokemon</th>
+       <th scope="col">Level</th>
+       <th scope="col">Trade Completed</th>
+
+     </tr>
+   </thead>
+   <tbody>
+      {% for post in tradepost %}
+        {% if not post.is_active %}
+          {% for offer in post.offertrade_set.all %}
+            {% if offer.is_accepted %}
+            <tr>
+              <th scope="row">{{ post.pk }}</th>
+              <td>{{ post.trader }}</td>
+              <td><i class="pi pi-{{ post.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ post.pokemon_name }}</td>
+              <td>{{ post.pokemon_level }}</td>
+              <td>{{ offer.trader }}</td>
+              <td><i class="pi pi-{{ offer.pokemon_name|lower }}" style="margin-right:10px;"></i>{{ offer.pokemon_name }}</td>
+              <td>{{ offer.pokemon_level }}</td>
+              <td>{{ post.traded_date }}</td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+   </tbody>
+ </table>
+
+ </div>
+
+</div>
+
+<div class="container" style="margin-top:30px;margin-bottom:100px;">
+
+    <h1 class="text-primary">Favourites</h1>
+	    <p> This website aims to bring Pokemon trainers
+(Pokemon X, Y, Omega Ruby and Alpha Sapphire) and 7th generation Pokemon games
+ (Sun and Moon) together in order to complete Wi-Fi trades to gain those elusive
+ Pokemon and complete your Pokedex.</p>
+
+ <div class="container" style="margin-top:20px;">
+       <br>
+
+ <table class="table">
+   <thead class="thead-light">
+     <tr>
+       <th scope="col">Trade #</th>
+       <th scope="col">Trader</th>
+       <th scope="col">Pkmn Name</th>
+       <th scope="col">Level</th>
+       <th scope="col">Game</th>
+       <th scope="col"></th>
+       <th scope="col"></th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr>
+
+       {% for fav in favourite %}
+
+         <tr>
+           <th scope="row">{{ fav.pk }}</th>
+           <td>{{ fav.post.trader }}</td>
+           <td><i class="pi pi-{{ fav.post.pokemon_name|lower }}" style="margin-right:10px;"></i>{{fav.post.pokemon_name|title}}</td>
+           <td>{{ fav.post.pokemon_level }}</td>
+           <td>{{ fav.post.game }}</td>
+           <td><a href="{% url 'pokemon:offertrade' fav.post.pk %}"><button type="button" class="btn btn-primary" name="offer">Offer</button></a></td>
+
+
+                <form action="{% url 'pokemon:favourite' fav.pk %}" method="GET">
+                   <td><input type="submit" class="btn btn-primary" value="Delete" name="Delete"></input></td>
+               </form>
+         </tr>
+
+       {% endfor %}
+
+
+
+     </tr>
+   </tbody>
+ </table>
+
+ </div>
+
+</div>
+
+</body>
+
+
+{%else%}
+<div class="container" style="margin-top:200px;margin-bottom:100px;width:1000px;">
+
+  <div class = "row">
+   <div class = "col-sm">
+
+     <h1 class="text-primary">Trainer, you have not logged in</h1>
+	   <p style="font-size:20px;margin-bottom:60px;">You need an account in order to make trades and contacts with other trainers.</p>
+
+
+     <a href="/account/login">
+            <button class="btn btn-lg btn-primary">Register or Login</button>
+     </a>
+
+     <a  href="/pokemon/">
+     <button class="btn btn-lg btn-secondary" type="button"
+         aria-haspopup="true" aria-expanded="false">
+           Cancel
+     </button>
+     </a>
+
+   </div>
+
+   <div class = "col-sm">
+
+     <div class="container" width="100%" style="position:relative;top:-80px;">
+       <img class="img-fluid" src  ="{% static "img/loginpop.jpg" %}" alt = "My Image">
+     </div>
+    </div>
+
+</div>
+{%endif%}
+
+</div>
+{% endblock %}

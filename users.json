@@ -1,0 +1,56 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$150000$8P55uc52HkMM$VWgVnc6+kWmwbRfiCmFefIGdW5aA8lmHju+lbUs31jU=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Red",
+            "first_name": "",
+            "last_name": "",
+            "email": "red@test.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2019-08-04T18:52:23.433Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$150000$LwcKwg24E7zz$VW97e7cQY4W13ymo7mXXJ+I3pmVaK8nfLjRYLzdQWlE=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Blue",
+            "first_name": "",
+            "last_name": "",
+            "email": "blue@sfu.ca",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2019-08-04T18:53:18.803Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$150000$61cQT6oR49CJ$yGISJJBOJEw/fbJuSYExSLCLxJJxLjFDU6716EZIDek=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Ash",
+            "first_name": "",
+            "last_name": "",
+            "email": "ash@test.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2019-08-04T18:53:41.897Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

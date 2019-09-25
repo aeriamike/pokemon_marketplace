@@ -1,0 +1,248 @@
+{% extends 'pokemon/layout.html' %}
+{% block content %}
+{% load static %}
+
+
+<!-- <img src ="{% static "img/lillie.jpg" %}" alt = "My Image"> -->
+<div class="container" width="100%" style="position:relative;top:30px;">
+  <img class="img-fluid" src  ="{% static "img/homecover.jpg" %}" alt = "My Image">
+</div>
+
+<div class="container" style="margin-top:100px;width:1000px;">
+
+    <h1 class="text-primary">Welcome to Pokemon Marketplace</h1>
+	     <p style="line-height: 2; font-size:16px"> This website aims to bring Pokemon trainers
+(Pokemon X, Y, Omega Ruby and Alpha Sapphire) and 7th generation Pokemon games
+ (Sun and Moon) together in order to complete Wi-Fi trades to gain those elusive
+ Pokemon and complete your Pokedex.</p>
+
+ <p style="line-height: 2; font-size:16px">Here you will be able to organise trades with people all
+ over the world, but by using website you no longer have to be online hoping someone
+ has the Pokemon you are after. Here you are able to find the Pokemon you want,
+make an offer, and organise a time to trade without the uncertainty of the Global Trade Station.</p>
+
+  <div class="row" style="margin-top:70px">
+  <h4 class="text-primary" style="margin-right:1em">Find your Pokemon</h4>
+  <!-- <form action="/pokemon/" method="POST">{% csrf_token %}
+    <button class="btn btn-default">
+         Reset
+    </button>
+  </form> -->
+  </div>
+ <div class="row">
+    <div class="form-group col-sm" style="width:200px;display:display:inline-block;">
+     <label for="sel1">Pokemon Number</label>
+     <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+     <select class="form-control" id="sel1" type="search" name="pkid">
+       {% for pkmn in pokemon %}
+       <option{% if forloop.counter|title == 1pk.id %} selected{% endif %}>{{forloop.counter}}</option>
+       {%endfor%}
+     </select>
+         <button class="btn btn-default">
+            search
+         </button>
+     </form>
+     </div>
+
+     <div class="form-group col-sm" style="width:200px;display:display:inline-block;">
+      <label for="sel1">Pokemon Name</label>
+      <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+      <select class="form-control" id="sel1" type="search" name="pkname">
+        {% for pkmn in pokemon %}
+        <option{% if pkmn.name|title == 1pk.name %} selected{% endif %}>{{pkmn.name|title}}</option>
+        {%endfor%}
+      </select>
+          <button class="btn btn-default">
+             Search
+          </button>
+      </form>
+      </div>
+
+      <div class="form-group col-sm" style="width:200px;display:inline-block;">
+       <label for="sel1">Type</label>
+       <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+       <select class="form-control" id="sel1" type="search" name="pktype">
+        {% for i in pktype %}
+        <option{% if i|title == 1pk.type %} selected{% endif %}>{{ i|title }}</option>
+        {%endfor%}
+       </select>
+           <button class="btn btn-default">
+              Search
+           </button>
+       </form>
+       </div>
+
+       <div class="form-group col-sm" style="width:200px;display:inline-block;">
+          <label for="sel1">Game</label>
+          <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+          <select class="form-control" id="sel1" type="search" name="pkgame">
+           {% for i in pkgame %}
+             <option{% if i|title == 1pk.game %} selected{% endif %}>{{ i|title }}</option>
+           {%endfor%}
+          </select>
+              <button class="btn btn-default">
+                 Search
+              </button>
+          </form>
+          </div>
+
+          <div class="form-group col-sm" style="width:200px;display:inline-block;">
+              <label for="sel1">Abilities</label>
+              <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+              <select class="form-control" id="sel1" type="search" name="pkability">
+               {% for i in pokeabilities %}
+                 <option{% if i.name|title == 1pk.ability %} selected{% endif %}>{{ i.name|title }}</option>
+               {%endfor%}
+              </select>
+                  <button class="btn btn-default">
+                     Search
+                  </button>
+              </form>
+              </div>
+
+      <!-- <div class="form-group col-sm" style="width:200px;display:inline-block;">
+        <label for="sel1">Game</label>
+        <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+        <select class="form-control" id="sel1" type="search" name="pkgame">
+         {% for i in pkgame %}
+           <option{% if i|title == 1pkgame %} selected{% endif %}>{{ i|title }}</option>
+         {%endfor%}
+        </select>
+            <button class="btn btn-default">
+               Search
+            </button>
+        </form>
+        </div>
+
+        <div class="form-group col-sm" style="width:200px;display:inline-block;">
+        <label for="sel1">Abilities</label>
+        <form action="{% url 'pokemon:tradelist' %}" method="POST">{% csrf_token %}
+        <select class="form-control" id="sel1" type="search" name="pkability">
+         {% for i in pokeabilities %}
+           <option{% if i.name|title == 1pkability %} selected{% endif %}>{{ i.name|title }}</option>
+         {%endfor%}
+        </select>
+            <button class="btn btn-default">
+               Search
+            </button>
+        </form>
+        </div>-->
+
+
+   </div>
+
+
+</div>
+
+
+
+<div class="container" style="margin-top:70px;">
+    <h1 class="text-primary">How does this work?</h1>
+	  <p style="line-height: 2; font-size:16px"> The website has a trading section. Trainers can search for a Pokemon they want. Then,
+      the website gives a list of available trade that satisfy the search criteria after pressing the search button.<br>
+    The trainer can select a post and make an offer of which Pokemon he/she wants to trade for.<br>
+  Once a deal is made, traders can arrange a time on the website's messenger to make a trade through their games</p>
+
+
+
+    <a href="/contacts/add_contact">
+    </a>
+</div>
+<div class="container" style="margin-top:70px;">
+    <h1 class="text-primary">Closing Trades</h1>
+ 	    <p style="line-height: 2; font-size:16px"> The following trades are approaching to their deadline. Better make your decision before they are gone
+      <br>You may favourite an offer, so you can look back at it from your profile section.<br>
+      You must sign-in to your account in order to access the posts</p>
+      <br>
+
+      <form action="{% url 'pokemon:index' %}" method="POST">{% csrf_token %}
+          <button class="btn btn-default">
+              Reset
+          </button>
+        </form>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Trade #</th>
+      <th scope="col"><a href="{% url 'pokemon:index' %}?trader={{toggle.trader}}{{queryString}}">Trader</a></th>
+      <th scope="col"><a href="{% url 'pokemon:index' %}?pokemon_offer={{toggle.pokemon_offer}}{{queryString}}">Pkmn Name</a></th>
+      <th scope="col"><a href="{% url 'pokemon:index' %}?gender={{toggle.gender}}{{queryString}}">Gender</a></th>
+      <th scope="col"><a href="{% url 'pokemon:index' %}?level={{toggle.level}}{{queryString}}">Level</a></th>
+      <th scope="col"><a href="{% url 'pokemon:index' %}?game={{toggle.game}}{{queryString}}">Game</a></th>
+      <th scope="col"><a href="{% url 'pokemon:index' %}?deadline={{toggle.deadline}}{{queryString}}">Deadline</a></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for trade in tradepost %}
+    {% if trade.is_active %}
+    <tr>
+      <th scope="row">{{trade.id}}</th>
+      <td>{{trade.trader}}</td>
+      <td><i class="pi pi-{{ trade.pokemon_name|lower }}" style="margin-right:10px;"></i>{{trade.pokemon_name}}</td>
+      <td>{{ trade.pokemon_gender }}</td>
+      <td>{{ trade.pokemon_level }}</td>
+      <td>{{trade.game}}</td>
+     <td>{{ trade.deadline }}</td>
+     {% if user.username == trade.trader %}
+       <td><a href="{% url 'pokemon:offertrade' trade.id %}"><button type="button" class="btn" disabled>Offer</button></a></td>
+       <td><button type="button" class="btn" disabled>Favourite</button</td>
+     {% else %}
+     <td><a href="{% url 'pokemon:offertrade' trade.id %}"><button type="button" class="btn btn-primary" name="offer">Offer</button></a></td>
+
+     <form action="{% url 'pokemon:favourite' trade.id %}" method="GET">
+        <td><i class="fa fa-shopping-cart"></i><input type="submit" class="btn btn-primary" value="Favourite" name="favourite"></input></td>
+    </form>
+    {% endif %}
+
+    </tr>
+    {% endif %}
+    {% endfor %}
+
+
+
+    </tbody>
+    </thead>
+    </table>
+
+
+
+
+<div class="container" style="margin-top:100px;">
+    <h1 class="text-primary">About</h1>
+	 <p> This is a website about pokemon. Down below are some random word paragraphs </p>
+	    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, s
+        ed do eiusmod tempor incididunt ut labore et dolore magna
+        aliqua. Ut enim ad minim veniam, quis nostrud exercit
+        ation ullamco laboris nisi ut aliquip ex ea commodo consequat. d</p>
+
+    <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+       doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+        veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
+         ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+      sed quia consequuntur magni dolores eos qui ratione voluptatem
+      sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
+      consectetur, adipisci velit, sed quia non numquam eius modi tempora
+       incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad
+       minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam,
+        nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit
+        qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui
+        dolorem eum fugiat quo voluptas nulla pariatur?"
+      </p>
+    <a href="/contacts/add_contact">
+    </a>
+</div>
+</div>
+<br>
+<br>
+<br>
+
+</body>
+
+{% endblock %}
+
+
+
+</html>

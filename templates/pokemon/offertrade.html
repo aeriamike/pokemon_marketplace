@@ -1,0 +1,229 @@
+{% extends 'pokemon/layout.html' %}
+{% block content %}
+{% load static %}
+
+
+{% if user.is_authenticated %}
+
+{% if error_message %}
+<div class="container" style="margin-top:100px;margin-bottom:100px;">
+  <h1 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Offer Error</h1>
+  <div class="box" style="">
+    <p style="line-height: 2;">{{ error_message }}</p>
+    <p>Click the button below to go back to trade list page.</p>
+  </div>
+
+  <a  href="{% url 'pokemon:tradelist' %}">
+    <button class="btn btn-lg btn-primary" type="button">
+          Go Back
+    </button>
+    </a>
+</div>
+{% endif %}
+
+{% if tradepost %}
+<div class="container" style="margin-top:100px;margin-bottom:100px;">
+  <h1 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Trade Offer</h1>
+  <div class="box" style="">
+    <p style="line-height: 2;">Put an offer for {{ tradepost.pokemon_name }} with trader {{ tradepost.trader }}.</p>
+  </div>
+  <form method="post" action="{% url 'pokemon:offertrade' tradepost.id %}">
+    {% csrf_token %}
+  <div class="row">
+    <div class="col">
+      
+        <div class="col" style="">
+            <h3>Your Pokemon:</h3>
+           <img id="pokemon_picture"class="img-fluid" src  ="{% static "pokemon-regsprite/pokemon" %}/1.png " alt = "My Image" style="width:auto;height:150px;">    
+          </div>
+        
+        <div class="col" style="">
+            <div class="form-group">
+              <label for="pkData">Pokemon Name:</label>
+              <select class="form-control" id="pkData" name="pkData" onchange=changeDetail(this)>
+                {% for pokemon in pokemon_list %}
+                <option types='{{pokemon.types}}' abilities='{{pokemon.abilities}}'>{{ pokemon.id }} - {{ pokemon.name }} </option>
+                {% endfor %}
+              </select>
+            </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+              <label for="pkLevel">Pokemon Level:</label>
+              <input type="number" id="pkLevel" class="form-control" name="pkLevel" min="1" max="100" value="1" required>
+          </div>
+        </div>
+        <div class="col" style="">
+          <div class="form-group">
+            <label for="pkGender">Pokemon Gender:</label>
+            <select type="text" id="pkGender" class="form-control" name="pkGender">
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+        </div>
+      
+        <div class="col" style="">
+          <div class="form-group">
+            <label>Pokemon Types:</label>
+            <input id="pokemon_types" class="form-control" value="Grass, Poison" disabled> </input>
+          </div>
+        </div>
+        <div class="col" style="">
+            <div class="form-group">
+              <label>Pokemon Abilities:</label>
+              <input id="pokemon_abilities" class="form-control" value="Chlorophyl, Overgrow" disabled> </input>
+            </div>
+        </div>
+        <div class="col" style="">
+            <div class="form-group">
+              <label for="pkGame">Pokemon Game:</label>
+              <select class="form-control" id="pkGame" name="pkGame">
+                  {% for game in pkgames %}
+                  <option>{{ game }}</option>
+                  {% endfor %}
+                 </select>
+            </div>
+          </div>
+      </div>
+      <div class="col">
+          <div class="col" style="">
+            <h3>{{tradepost.trader}}'s Pokemon:</h3>
+            <!-- <p style="line-height: 2;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc. Hac habitasse platea dictumst vestibulum. Justo eget magna fermentum iaculis eu non diam. A scelerisque purus semper eget duis. Scelerisque fermentum dui faucibus in ornare. Mus mauris vitae ultricies leo integer malesuada. Eget felis eget nunc lobortis. Mattis molestie a iaculis at erat pellentesque. Nisl nisi scelerisque eu ultrices vitae.</p> -->
+            <!-- <i class="pi pi-{{ tradepost.Pokemon_offer }}" style="margin-right:10px;"></i> -->
+            <img class="img-fluid" src  ="{% static "pokemon-regsprite/pokemon" %}/{{tradepost.pokemon_id}}.png " alt = "My Image" style="width:auto;height:150px;">
+    
+    
+            <!-- <p>{{ traddepost.Pokemon_number }}{{ tradepost.Pokemon_offer }}</p> -->
+          </div>
+        <div class="col" style="">
+          <!-- <p style="line-height: 2;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc. Hac habitasse platea dictumst vestibulum. Justo eget magna fermentum iaculis eu non diam. A scelerisque purus semper eget duis. Scelerisque fermentum dui faucibus in ornare. Mus mauris vitae ultricies leo integer malesuada. Eget felis eget nunc lobortis. Mattis molestie a iaculis at erat pellentesque. Nisl nisi scelerisque eu ultrices vitae.</p> -->
+          <!-- <i class="pi pi-{{ tradepost.Pokemon_offer }}" style="margin-right:10px;"></i> -->
+          <div class="form-group">
+            <label>Pokemon Name:</label>
+            <input class="form-control" value="{{ tradepost.pokemon_id }} - {{ tradepost.pokemon_name }}" disabled> </input>
+          </div>
+        </div>
+
+        <div class="col" style="">
+          <div class="form-group">
+            <label>Pokemon Level:</label>
+            <input class="form-control" value="{{ tradepost.pokemon_level }}" disabled> </input>
+          </div>
+        </div>
+        <div class="col" style="">
+          <div class="form-group">
+            <label>Pokemon Gender:</label>
+            <input class="form-control" value="{{ tradepost.pokemon_gender }}" disabled> </input>
+          </div>
+        </div>
+
+        <div class="col" style="">
+            <div class="form-group">
+              <label>Pokemon Types:</label>
+              <input class="form-control" value="{% for type in tradepost.pokemon_types %}{{ type }}{% if not forloop.last %}, {% endif %}{% endfor %}" disabled> </input>
+            </div>
+          </div>
+        <div class="col" style="">
+            <div class="form-group">
+              <label>Pokemon Abilities:</label>
+              <input class="form-control" value="{% for abilities in tradepost.pokemon_abilities %}{{ abilities }}{% if not forloop.last %}, {% endif %}{% endfor %}" disabled> </input>
+            </div>
+        </div>
+        <div class="col" style="">
+            <div class="form-group">
+              <label>Game:</label>
+              <input class="form-control" value="{{ tradepost.game }}" disabled> </input>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <br>
+    <button class="btn btn-lg btn-primary">
+          Offer
+    </button>
+
+    <a  href="/pokemon/profile">
+    <button class="btn btn-lg btn-primary" type="button"
+        aria-haspopup="true" aria-expanded="false">
+          Cancel
+    </button>
+    </a>
+    <a  href="{% url 'privatemsg:messages_compose_to' tradepost.trader %}">
+    <button class="btn btn-lg btn-primary" type="button"
+        aria-haspopup="true" aria-expanded="false">
+          Message
+    </button>
+    </a>
+
+  </form>
+
+  <script>
+  function changeDetail(element){
+    let pokemon = element.value.split(' - ')
+    document.querySelector('#pokemon_picture').src = '/static/pokemon-regsprite/pokemon/' + pokemon[0] + '.png' 
+    let attr = element.options[element.selectedIndex].attributes
+    let types = JSON.parse(attr.types.value.replace(/'/g, '"'))
+    let abilities = JSON.parse(attr.abilities.value.replace(/'/g, '"'))
+    let types_display = ''
+    let abilities_display = ''
+    types.map((elem, index) => {
+      types_display += elem
+      if(index != types.length-1) types_display += ', '
+    })
+    document.querySelector('#pokemon_types').value = types_display
+    abilities.map((elem, index) => {
+      abilities_display += elem
+      if(index != types.length) abilities_display += ', '
+    })
+    document.querySelector('#pokemon_abilities').value = abilities_display
+  }
+  </script>
+
+{% endif %}
+
+{%else%}
+
+
+<div class="container" style="margin-top:200px;margin-bottom:100px;width:1000px;">
+
+  <div class = "row">
+   <div class = "col-sm">
+
+     <h1 class="text-primary">Trainer, you have not logged in</h1>
+	   <p style="font-size:20px;margin-bottom:60px;">You need an account in order to make trades and contacts with other trainers.</p>
+
+
+     <a href="/account/login">
+            <button class="btn btn-lg btn-primary">Register or Login</button>
+     </a>
+
+     <a  href="/pokemon/">
+     <button class="btn btn-lg btn-secondary" type="button"
+         aria-haspopup="true" aria-expanded="false">
+           Cancel
+     </button>
+     </a>
+
+   </div>
+   <div class = "col-sm">
+
+     <div class="container" width="100%" style="position:relative;top:-80px;">
+       <img class="img-fluid" src  ="{% static "img/loginpop.jpg" %}" alt = "My Image">
+     </div>
+
+    </div>
+
+</div>
+
+
+{%endif%}
+<br>
+<br><br>
+<br>
+</div>
+
+
+{% endblock %}

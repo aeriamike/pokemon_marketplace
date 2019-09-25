@@ -1,0 +1,139 @@
+{% extends 'pokemon/layout.html' %}
+{% block content %}
+{% load static %}
+
+
+{% if user.is_authenticated %}
+
+
+<div class="container" style="margin-top:100px;margin-bottom:100px;">
+
+  <h1 class="text-primary" style="margin-top:20px;margin-bottom:20px;">Make a Trade Post</h1>
+  <div class="box" style="">
+    <!-- <p style="line-height: 2;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc. Hac habitasse platea dictumst vestibulum. Justo eget magna fermentum iaculis eu non diam. A scelerisque purus semper eget duis. Scelerisque fermentum dui faucibus in ornare. Mus mauris vitae ultricies leo integer malesuada. Eget felis eget nunc lobortis. Mattis molestie a iaculis at erat pellentesque. Nisl nisi scelerisque eu ultrices vitae.</p> -->
+    <p style="line-height: 2;">You can create your post here! Please provide the following information.</p>
+    <p style="line-height: 2;">All fields: Pokemon name, gender, level, and game need to be filled in.</p>
+    <p style="line-height: 2;">Trades expire in three days after they are imposed</p>
+
+  </div>
+<!-- </div> -->
+
+<!-- <form method="post" action="{% url 'pokemon:maketrade'%}"> -->
+<img id="pokemon_picture" class="img-fluid" src  ="{% static "pokemon-regsprite/pokemon" %}/1.png " alt = "My Image" height="500px;">
+<form method="post" action="/pokemon/profile/maketrade">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="pkData">Pokemon Name:</label>
+    <select class="form-control" id="pkData" name="pkData" onchange=changeDetail(this)>
+      {% for pokemon in pokemon_list %}
+      <option types='{{pokemon.types}}' abilities='{{pokemon.abilities}}'>{{ pokemon.id }} - {{ pokemon.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="pkGender">Pokemon Gender:</label>
+    <select id="pkGender" class="form-control" name="pkGender">
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="pkLevel">Pokemon Level:</label>
+    <input type="number" id="pkLevel" class="form-control" name="pkLevel" min="1" max="100" value="1" required>
+  </div>
+
+  <div class="form-group">
+    <label for="pkData">Pokemon Types:</label>
+    <input id="pokemon_types" class="form-control" value="Grass, Poison" disabled> </input>
+  </div>
+  <div class="form-group">
+    <label for="pkData">Pokemon Abilities:</label>
+    <input id="pokemon_abilities" class="form-control" value="Chlorophyl, Overgrow" disabled> </input>
+  </div>
+
+  <div class="form-group">
+      <label for="pkGame">Game:</label>
+      <select class="form-control" id="pkGame" name="pkGame">
+        {% for game in pkgames %}
+        <option>{{ game }}</option>
+        {% endfor %}
+       </select>
+    </div>
+
+  <button class="btn btn-lg btn-primary" value="Make Post">
+    Make Post
+  </button>
+
+  <a href="/pokemon/profile">
+    <button class="btn btn-lg btn-primary" type="button"
+        aria-haspopup="true" aria-expanded="false">
+        Cancel
+    </button>
+  </a>
+</form>
+
+
+
+{%else%}
+<div class="container" style="margin-top:200px;margin-bottom:100px;width:1000px;">
+
+    <div class = "row">
+     <div class = "col-sm">
+  
+       <h1 class="text-primary">Trainer, you have not logged in</h1>
+       <p style="font-size:20px;margin-bottom:60px;">You need an account in order to make trades and contacts with other trainers.</p>
+  
+  
+       <a href="/account/login">
+              <button class="btn btn-lg btn-primary">Register or Login</button>
+       </a>
+  
+       <a  href="/pokemon/">
+       <button class="btn btn-lg btn-secondary" type="button"
+           aria-haspopup="true" aria-expanded="false">
+             Cancel
+       </button>
+       </a>
+  
+     </div>
+  
+     <div class = "col-sm">
+  
+       <div class="container" width="100%" style="position:relative;top:-80px;">
+         <img class="img-fluid" src  ="{% static "img/loginpop.jpg" %}" alt = "My Image">
+       </div>
+      </div>
+  
+  </div>
+{%endif%}
+<br>
+<br><br>
+<br>
+</div>
+<script>
+function changeDetail(element){
+  let pokemon = element.value.split(' - ')
+  document.querySelector('#pokemon_picture').src = '/static/pokemon-regsprite/pokemon/' + pokemon[0] + '.png' 
+  let attr = element.options[element.selectedIndex].attributes
+  let types = JSON.parse(attr.types.value.replace(/'/g, '"'))
+  let abilities = JSON.parse(attr.abilities.value.replace(/'/g, '"'))
+  let types_display = ''
+  let abilities_display = ''
+  types.map((elem, index) => {
+    types_display += elem
+    if(index != types.length-1) types_display += ', '
+  })
+  document.querySelector('#pokemon_types').value = types_display
+  abilities.map((elem, index) => {
+    abilities_display += elem
+    if(index != abilities.length-1) abilities_display += ', '
+  })
+  document.querySelector('#pokemon_abilities').value = abilities_display
+}
+</script>
+
+
+
+{% endblock %}

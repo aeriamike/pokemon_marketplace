@@ -1,0 +1,69 @@
+[
+    {
+      "model": "pokemon.tradepost",
+      "pk": 1,
+      "fields": {
+        "trader": "Red",
+        "pokemon_name": "Bulbasaur",
+        "pokemon_id": 1,
+        "pokemon_types": "[\"Poison\", \"Grass\"]",
+        "pokemon_abilities": "[\"Chlorophyll\", \"Overgrow\"]",
+        "pokemon_level": 28,
+        "pokemon_gender": "Male",
+        "game": "LeafGreen",
+        "completed_by": "",
+        "traded_date": null,
+        "deadline": "2019-08-09T01:17:32.802Z"
+      }
+    },
+    {
+      "model": "pokemon.tradepost",
+      "pk": 2,
+      "fields": {
+        "trader": "Red",
+        "pokemon_name": "Charizard",
+        "pokemon_id": 6,
+        "pokemon_types": "[\"Flying\", \"Fire\"]",
+        "pokemon_abilities": "[\"Solar-Power\", \"Blaze\"]",
+        "pokemon_level": 13,
+        "pokemon_gender": "Male",
+        "game": "Red",
+        "completed_by": "",
+        "traded_date": null,
+        "deadline": "2019-08-09T01:18:02.583Z"
+      }
+    },
+    {
+      "model": "pokemon.tradepost",
+      "pk": 3,
+      "fields": {
+        "trader": "Blue",
+        "pokemon_name": "Blastoise",
+        "pokemon_id": 9,
+        "pokemon_types": "[\"Water\"]",
+        "pokemon_abilities": "[\"Rain-Dish\", \"Torrent\"]",
+        "pokemon_level": 46,
+        "pokemon_gender": "Female",
+        "game": "Blue",
+        "completed_by": "",
+        "traded_date": null,
+        "deadline": "2019-08-09T01:19:00.704Z"
+      }
+    },
+    {
+      "model": "pokemon.tradepost",
+      "pk": 4,
+      "fields": {
+        "trader": "Ash",
+        "pokemon_name": "Pikachu",
+        "pokemon_id": 25,
+        "pokemon_types": "[\"Electric\"]",
+        "pokemon_abilities": "[\"Lightning-Rod\", \"Static\"]",
+        "pokemon_level": 90,
+        "pokemon_gender": "Male",
+        "game": "Yellow",
+        "completed_by": "",
+        "traded_date": null,
+        "deadline": "2019-08-09T01:19:48.885Z"
+      }
+    }]
